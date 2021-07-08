@@ -448,12 +448,12 @@ class Junit(object):
                                 newproperty.value = property.attrib["value"]
                                 newcase.properties.append(newproperty)
 
-    def html(self):
+    def html(self, templates_path=None):
         """
         Render the test suite as a HTML report with links to errors first.
         :return:
         """
 
         doc = HTMLReport()
-        doc.load(self, os.path.basename(self.filename))
+        doc.load(self, os.path.basename(self.filename), templates_path=templates_path)
         return str(doc)

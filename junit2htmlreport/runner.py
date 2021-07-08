@@ -16,6 +16,10 @@ PARSER.add_argument("--report-matrix", dest="html_matrix", type=str,
                     metavar="REPORT",
                     help="Generate an HTML report matrix")
 
+PARSER.add_argument("--templates-dir", dest="html_templates_dir", type=str,
+                    default=None, metavar="TEMPLATE-DIR",
+                    help="Alternate location to look for templates, instead of the supplied defaults")
+
 PARSER.add_argument("--max-failures", dest="fail", type=int, default=0,
                     metavar="FAILURES",
                     help="Exit non-zero if FAILURES or more test cases are failures (has no effect with --merge)")
@@ -87,8 +91,8 @@ def run(args):
         else:
             outfilename = opts.REPORTS[0] + ".html"
 
-        report = parser.Junit(args[0])
-        html = report.html()
+        report = parser.Junit(opts.REPORTS[0])
+        html = report.html(templates_path=opts.html_templates_dir)
 
         with open(outfilename, "wb") as outfile:
             outfile.write(html.encode('utf-8'))
